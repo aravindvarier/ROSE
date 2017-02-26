@@ -8,12 +8,30 @@ octs = map(Seq.from_fasta, BM.read_fasta_file("octomers.fasta"))
 entries = 0
 f = open("test.fasta",'w')
 
+def horspool(y): #This function makes the Character Shift table for each octomer
+    table={}
+    i=0
+    x=len(y)
+    for nuc in y:
+        if i==x-1:
+            break
+        if nuc not in table.keys():
+            table.update({nuc:x-1-i})
+        else:
+            table[nuc]=x-1-i
+        i=i+1
+    print table
+    return table
+
 
 for o in octs:
+    table=horspool(o.seq)
     for s in seqs:
-        for i in range(0,s.len() - o.len() -1):
+        i=0
+        while i<=s.len()-o.len()-1:
             sub_seq = s.seq[i:i+o.len()]
-            if BM.get_hamming(o.seq, sub_seq, max_hamming=0) != -1:
+            q=BM.get_hamming(o.seq, sub_seq, max_hamming=0)
+            if  q== 'default':
                 print sub_seq+"\n"+o.seq+"\n"
 
                 #extract flanking reqions
@@ -24,3 +42,9 @@ for o in octs:
                 f.write(new.fasta())
                 entries += 1
                 print "Entry No: " + str(entries)
+                i=i+1
+            else:
+                if q in table.keys():
+                    i=i+table[q]
+                else:
+                    i=i+o.len()
