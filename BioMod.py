@@ -50,9 +50,12 @@ def get_hamming(str1, str2, max_hamming=-1):
     if max_hamming==-1:
         max_hamming=leng;
     err = 0;
-    for i in range(0,leng):
+    q='default'
+    i=leng-1
+    while i>=0:
         if str1[i] != str2[i]:
             err += 1
             if err>max_hamming:
-                return -1
-    return err
+                return str2[leng-1]
+        i=i-1
+    return q
