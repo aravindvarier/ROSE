@@ -8,7 +8,7 @@ octs = map(Seq.from_fasta, BM.read_fasta_file("octomers.fasta"))
 entries = 0
 f = open("test.fasta",'w')
 
-def horspool(y):
+def horspool(y): #This function makes the Character Shift table for each octomer
     table={}
     i=0
     x=len(y)
