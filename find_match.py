@@ -28,7 +28,6 @@ for o in octs:
     table=horspool(o.seq)
     for s in seqs:
         i=0
-        #for i in range(0,s.len() - o.len() -1,char_shift_table(o,s)):
         while i<=s.len()-o.len()-1:
             sub_seq = s.seq[i:i+o.len()]
             q=BM.get_hamming(o.seq, sub_seq, max_hamming=0)
